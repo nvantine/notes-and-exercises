@@ -1,0 +1,221 @@
+\documentclass[fontsize=14pt]{scrartcl}
+\setkomafont{disposition}{\normalfont\bfseries}
+
+% Standard American Math Society packages provide theorem environments, symbols,
+% etc.
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%margins
+\usepackage[margin=.75in]{geometry}
+
+%links table of contents
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%header
+\usepackage{fancyhdr}
+\setlength{\footskip}{15pt}
+\pagestyle{fancy}
+
+%enumerate
+\usepackage{enumitem}
+
+
+\title{Notes}
+\author{Nicholas Vantine}
+\date{}
+
+\input{macros}
+\input{env}
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\bibliographystyle{plain}
+
+\newpage
+
+\section{Advanced Calculus}
+
+\begin{exercise}
+Show 
+\[
+\left(\bigcup_{i=1}^{\infty} A_i\right)^c = \bigcap_{i=1}^{\infty} A_i^c.
+\]
+\end{exercise}
+\begin{proof}
+We show both inclusions via a chain of biconditionals.
+
+Let $x$ be arbitrary. Then
+\begin{align*}
+x \in \left(\bigcup_{i=1}^{\infty} A_i\right)^c
+&\iff x \notin \bigcup_{i=1}^{\infty} A_i \\
+&\iff x \notin A_i \text{ for all } i \in \mathbb{N} \\
+&\iff x \in A_i^c \text{ for all } i \in \mathbb{N} \\
+&\iff x \in \bigcap_{i=1}^{\infty} A_i^c.
+\end{align*}
+
+Since each step above is a biconditional, the chain holds in both directions. Hence
+\[
+\left(\bigcup_{i=1}^{\infty} A_i\right)^c = \bigcap_{i=1}^{\infty} A_i^c.
+\]
+\end{proof}
+
+
+\newpage
+\section{Linear Algebra}
+
+\section{Real Analysis}
+
+\section{Topology}
+
+\section{Differential Geometry}
+
+\newpage
+\section{Convex Optimization}
+
+\subsection{Convex Sets}
+\subsection*{Excercises}
+
+\begin{exercise}
+Let $C \subseteq \R^n$ be a convex set, with $x_1, \ldots, x_k \in C$, and let $\theta_1, \ldots, \theta_k \in \R$ satisfy $\theta_i \geq 0$, $\theta_1 + \cdots + \theta_k = 1$. Show that $\theta_1 x_1 + \cdots + \theta_k x_k \in C$. (The definition of convexity is that this holds for $k = 2$; you must show it for arbitrary $k$.) \textit{Hint.} Use induction on $k$.
+\end{exercise}
+
+\begin{proof}
+We prove the result by induction on the number of points.
+
+For the base case $k=2$, let $x_1,x_2\in C$ and let
+$\theta\in[0,1]$. Since $C$ is convex,
+
+\[
+(1-\theta)x_1+\theta x_2\in C.
+\]
+
+Hence every convex combination of two points in $C$ belongs to $C$.
+
+Now assume that every convex combination of $\ell$ points in $C$
+belongs to $C$. That is, if
+
+\[
+x_i\in C,\qquad
+\theta_i\ge0,\qquad
+\sum_{i=1}^{\ell}\theta_i=1,
+\]
+
+then
+
+\[
+\sum_{i=1}^{\ell}\theta_i x_i\in C.
+\]
+
+Now consider $\ell+1$ points
+$x_1,\ldots,x_{\ell+1}\in C$ and coefficients
+$\phi_i\ge0$ satisfying
+
+\[
+\sum_{i=1}^{\ell+1}\phi_i=1.
+\]
+
+We will show that
+
+\[
+\sum_{i=1}^{\ell+1}\phi_i x_i\in C.
+\]
+
+If $\phi_{\ell+1}=1$, then necessarily
+$\phi_1=\cdots=\phi_\ell=0$, so
+
+\[
+\sum_{i=1}^{\ell+1}\phi_i x_i
+=
+x_{\ell+1}\in C.
+\]
+
+Now suppose $\phi_{\ell+1}<1$. Define
+
+\[
+z
+:=
+\frac{1}{1-\phi_{\ell+1}}
+\sum_{i=1}^{\ell}\phi_i x_i.
+\]
+
+Since
+
+\[
+\sum_{i=1}^{\ell}\phi_i
+=
+1-\phi_{\ell+1},
+\]
+
+we have
+
+\[
+\sum_{i=1}^{\ell}
+\frac{\phi_i}{1-\phi_{\ell+1}}
+=
+1.
+\]
+
+Furthermore,
+
+\[
+\frac{\phi_i}{1-\phi_{\ell+1}}\ge0,
+\qquad i=1,\ldots,\ell.
+\]
+
+Therefore, by the induction hypothesis,
+
+\[
+z\in C.
+\]
+
+Finally,
+
+\[
+\begin{aligned}
+\sum_{i=1}^{\ell+1}\phi_i x_i
+&=
+\sum_{i=1}^{\ell}\phi_i x_i
++\phi_{\ell+1}x_{\ell+1} \\
+&=
+(1-\phi_{\ell+1})z
++\phi_{\ell+1}x_{\ell+1}.
+\end{aligned}
+\]
+
+Since $z,x_{\ell+1}\in C$ and
+$\phi_{\ell+1}\in[0,1]$, convexity of $C$ implies that
+
+\[
+(1-\phi_{\ell+1})z
++\phi_{\ell+1}x_{\ell+1}
+\in C.
+\]
+
+Hence,
+
+\[
+\sum_{i=1}^{\ell+1}\phi_i x_i\in C.
+\]
+
+Therefore, by induction, every finite convex combination of points in
+$C$ belongs to $C$.
+\end{proof}
+
+
+
+
+\newpage
+\bibliography{ref}
+
+\end{document}
