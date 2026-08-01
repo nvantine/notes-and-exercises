@@ -296,6 +296,44 @@
     \]
 \end{proof}
 
+
+\newpage
+
+
+\begin{exercise}
+    \textit{Voronoi description of halfspace.} Let $a$ and $b$ be distinct points in $\mathbf{R}^n$. Show that the set of all points that are closer (in Euclidean norm) to $a$ than $b$, i.e.,
+        $
+        \{x \mid \|x - a\|_2 \leq \|x - b\|_2\},
+        $
+    is a halfspace. Describe it explicitly as an inequality of the form $c^T x \leq d$. Draw a picture.
+\end{exercise}
+
+\begin{proof}
+    Since both sides are nonnegative,
+    \[
+        \|x-a\|_2 \le \|x-b\|_2 \iff \|x-a\|_2^2 \le \|x-b\|_2^2.
+    \]
+    Expanding,
+    \[
+        \|x-a\|_2^2 = x^Tx - 2a^Tx + a^Ta, \qquad \|x-b\|_2^2 = x^Tx - 2b^Tx + b^Tb.
+    \]
+    The inequality becomes
+    \[
+        x^Tx - 2a^Tx + a^Ta \le x^Tx - 2b^Tx + b^Tb,
+    \]
+        and the quadratic terms $x^Tx$ cancel, leaving
+    \[
+        2(b-a)^Tx \le b^Tb - a^Ta.
+    \]
+    Thus
+    \[
+        \{x \mid \|x-a\|_2 \le \|x-b\|_2\} = \{x \mid c^Tx \le d\}, \qquad
+        c = b-a, \quad d = \tfrac{1}{2}\big(\|b\|_2^2 - \|a\|_2^2\big).
+    \]
+    Since $a \ne b$, $c \ne 0$, so this is indeed a halfspace. Geometrically, it is the halfspace bounded by the perpendicular bisector of the segment $[a,b]$, containing $a$, with boundary normal vector $c = b - a$ pointing from $a$ toward $b$.
+\end{proof}
+
+
 \newpage
 
 
