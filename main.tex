@@ -78,8 +78,38 @@
 \newpage
 
 
-\section{Linear Algebra}
+\section{Linear Algebra \cite{Axler2024}}
 
+
+\begin{exercise}
+    Prove that $-(-v) = v$ for every $v \in V.$
+\end{exercise}
+
+\begin{proof}
+    Suppose $v \in V$, where $V$ is a Vector Space. 
+    By definition $-v$ is the additive of $v$, 
+    \[
+        v + (-v) = 0
+    \]
+    Also by definition, the additive inverse of $-v$ is, 
+    \[
+        -v + (-(v)) = 0
+    \]
+    Using commutativity we can rearrange one expression to see, 
+    \[
+        \begin{aligned}
+            (-v) + v = 0 \\
+            (-v) + (-(-v)) = 0
+        \end{aligned}
+    \]
+    Now using the fact additive inverses are unique, we can conclude that 
+    \[
+        -(-v) = v.
+    \]
+\end{proof}
+
+
+\newpage
 
 \section{Real Analysis}
 
