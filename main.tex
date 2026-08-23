@@ -46,6 +46,51 @@
 \newpage
 
 
+\section{Math Foundations}
+
+
+A relation simply relates elements in two different sets by delineating a subset of related pairs in the Cartesian product.
+
+\begin{definition}
+Let $X$ and $Y$ be sets. A \emph{relation} over $X \times Y$ is a subset $R \subseteq X \times Y$. If $Y = X$ then it is said to be \emph{homogeneous}, and $R$ is simply said to be a relation over $X$. If $(x,y) \in R$ then we say $x$ is related to $y$ and write $xRy$.
+\end{definition}
+
+\begin{example}
+Let $X$ and $Y$ be sets. Then the following are relations:
+\begin{enumerate}
+    \item The \emph{discrete relation}, $X \times Y$.
+    \item The \emph{empty relation}, $\emptyset \subseteq X \times Y$.
+    \item The \emph{diagonal relation}, $\{(x,x) : x \in X\}$.
+\end{enumerate}
+\end{example}
+
+\subsection*{Exercises}
+
+\begin{exercise}
+Give a necessary and sufficient condition for the empty, discrete, and diagonal relations to be equal.
+\end{exercise}
+
+\begin{proof}[Solution]
+    Let $Y = X$ and $X = \emptyset$
+\end{proof}
+
+\begin{exercise}
+If $(X_1, R_1)$ and $(X_2, R_2)$ are pairs of sets and relations on them, then the rule,
+\[
+(x,y) \, R_1 \times R_2 \, (x', y') \quad \text{iff} \quad xR_1x' \text{ and } yR_2y',
+\]
+defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation as a subset of $(X_1 \times X_2)^2$.
+\end{exercise}
+
+\begin{proof}[Solution]
+    \[
+        R_1 \times R_2 = \{ ((x,y),(x',y')) \in X_1 \times X_2 : xR_1x' \text{ and } yR_2y' \}
+    \]
+\end{proof}
+
+\newpage
+
+
 \section{Advanced Calculus \cite{Abbott2015}}
 
 
