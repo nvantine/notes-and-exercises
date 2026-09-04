@@ -91,6 +91,22 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 \newpage
 
 
+\begin{definition}
+     Let $X$ be a set and $R$ a relation over $X.$ We say $R$ is
+     \begin{enumerate}
+         \item \emph{reflexive} if $xRx$,  $\forall x \in X$,
+         \item \emph{symmetric} if $xRy$ implies $yRx$,  $\forall x,y \in X$,
+         \item \emph{transitive} if $xRy$ and $yRz$ implies $xRz$, $\forall x,y,z \in X$,
+         \item is an \emph{equivalence relation} on $X$ if it is reflexive, symmetric, and transitive.
+     \end{enumerate}
+\end{definition}
+
+\textbf{Notation.} An arbitrary equivalence relation is typically denoted $\sim$.
+
+
+\newpage
+
+
 \section{Advanced Calculus \cite{Abbott2015}}
 
 
@@ -171,6 +187,15 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 
 
 \subsection{Convex Sets}
+
+
+\begin{definition}
+    A set $C$ is convex if the line segment between any two points in $C$ lies in $C$, i.e., 
+    if for any $x_1,$ $x_2$ $\in$ $C$ and any $\theta$ with $ 0 \le \theta \le 1,$ we have
+    \[
+        \theta x_1 + (1 - \theta) x_2 \in C.
+    \]
+\end{definition}
 
 
 \subsection*{Excercises}
