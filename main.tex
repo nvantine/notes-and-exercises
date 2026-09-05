@@ -16,9 +16,12 @@
     colorlinks,
     citecolor=black,
     filecolor=black,
-    linkcolor=black,
+    linkcolor=blue,
     urlcolor=black
 }
+
+% 
+\usepackage{cleveref}
 
 %header
 \usepackage{fancyhdr}
@@ -46,7 +49,7 @@
 \newpage
 
 
-\section{Math Foundations}
+\section{Foundations}
 
 
 A relation simply relates elements in two different sets by delineating a subset of related pairs in the Cartesian product.
@@ -141,6 +144,57 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 
 \section{Linear Algebra \cite{Axler2024}}
 
+\begin{definition}[Addition]\label{def:addition}
+    A binary operation $+: S \times S \to S$, $(s,t) \mapsto s+t$, for $s,t \in S$.
+\end{definition}
+
+\begin{definition}[Scalar Multiplication]\label{def:scalar-mult}
+    A map $*: \F \times S \to S$, $(\lambda, s) \mapsto \lambda s$, for $\lambda \in \F,\ s \in S$.
+\end{definition}
+
+
+
+\begin{definition}
+    A Vector Space $V$ is a set equipped with an \emph{addition} and \emph{scalar multiplication} that hold the following properties:
+    \begin{itemize}
+        \item \emph{Commutativity}: $\quad \forall u,v \in V, \quad u+v=v+u.$ 
+        \item \emph{Associativity}: $\quad \forall u,v,w \in V, \quad (u + v) + w = u + (v + w).$ 
+        \item \emph{Additive Identity}: $\quad \exists 0 \in V, \forall v \in V, \quad v + 0 = v.$
+        \item \emph{Additive Inverse}: $\quad \forall v \in V, \exists w \in V, \quad v + w = 0.$
+        \item \emph{Multiplicative Identity}: $\quad \forall v \in V, \quad 1v = v.$
+        \item \emph{Distributive Laws}: $\quad \forall u,v \in V$ and $ \forall s,t \in \F,$ the following hold:
+            \[
+            \begin{aligned}
+                a(v + w) = av + aw \\ 
+                (a + b)v = av + bv.
+            \end{aligned}
+            \]
+    \end{itemize}
+\end{definition}
+
+
+\begin{theorem}
+    $\forall v \in V, \exists! w \in V, \quad v + w = 0.$
+\end{theorem}
+\begin{proof}
+    Suppose $V$ is a vector space. Let $ v \in V.$ Suppose $w$ and $w'$ are additive inverses of $v.$ Then
+    \[
+        w = w + 0 = w + (v +w') = (w + v) + w' = 0 + w' = w'.
+    \]
+    Thus $w = w'$. 
+\end{proof}
+
+
+\textbf{Remark.} We just proved a statement of the form,
+\[
+    \forall v \in V, [\exists u \in V, v + u = 0] \land [\forall w,w' \in V, ((v + w = 0) \land (v + w' = 0))\implies w' = w].
+\]
+
+While this makes the proof more complicated, I think it is important to see what is going on under the hood to truly understand the mechanisms that make this proof work. First we take the for all part of the statement, which says 'given any vector can you give me at least one of its inverses?' Surely, by the definition of a vector space a vector $u$ exists. Therefore we have the first part of conjunction completed. Now for the second part of the conjunction we have to assume that we are given 2 arbitrary inverses of $v$, and with that we can other other assumptions about vector spaces to always conclude that these 2 arbitrary elements are actually the same thing. Looking back at the proof you can see that the first part was not explicitly stated and proved at all but notice by working on the second part of the conjunction you are implicitly proving the existence part of the conjunctive statement.
+
+
+
+\newpage
 
 \begin{exercise}
     Prove that $-(-v) = v$ for every $v \in V.$
@@ -148,7 +202,7 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 
 \begin{proof}
     Suppose $v \in V$, where $V$ is a Vector Space. 
-    By definition $-v$ is the additive of $v$, 
+    By definition $-v$ is the additive inverse of $v$, 
     \[
         v + (-v) = 0
     \]
@@ -168,6 +222,9 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
         -(-v) = v.
     \]
 \end{proof}
+
+-- \href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV5yADyTgtACnwNFASisBaM3fy2AvHEv03WFnjhxUSPiUqACMVpYA1HCOznBuAAwMbkjCAPoAduQA5qkAxkjpueTo7r7%2BgcEATFYxtlGOta5wiZ5wKYIZ2XkFRSW1ZVAA7nzteeIgKij%2BIWV2dtP2ke5xzbPzqNWMTnBRDk5N8WUBQUltaRQAZjDdhcXRoQB0MFAFAM7%2BlQ%2BvLBLWZUZIXLwNDAV5fH4gIA}{Click here for the computer verified proof.}
+
 
 
 \newpage
