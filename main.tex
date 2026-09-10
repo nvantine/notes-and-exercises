@@ -1,5 +1,5 @@
-\documentclass[fontsize=14pt]{scrartcl}
-\setkomafont{disposition}{\normalfont\bfseries}
+\documentclass[12pt]{book}
+
 
 % Standard American Math Society packages provide theorem environments, symbols,
 % etc.
@@ -17,19 +17,26 @@
     citecolor=black,
     filecolor=black,
     linkcolor=blue,
-    urlcolor=black
+    urlcolor=blue
 }
 
-% 
 \usepackage{cleveref}
 
-%header
-\usepackage{fancyhdr}
-\setlength{\footskip}{15pt}
-\pagestyle{fancy}
+% %header
+% \usepackage{fancyhdr}
+% % \setlength{\footskip}{30pt}
+% \setlength{\headheight}{15pt}
+% \pagestyle{fancy}
 
 %enumerate
 \usepackage{enumitem}
+
+% For Lean
+\usepackage[newfloat]{minted}
+\setminted{breaklines}
+\usepackage{fontspec}
+\usepackage{tcolorbox}
+
 
 
 \title{Notes}
@@ -41,15 +48,10 @@
 \begin{document}
 
 \maketitle
-\newpage
 \tableofcontents
 \bibliographystyle{plain}
 
-
-\newpage
-
-
-\section{Foundations}
+\chapter{Foundations}
 
 
 A relation simply relates elements in two different sets by delineating a subset of related pairs in the Cartesian product.
@@ -91,8 +93,6 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
     \]
 \end{proof}
 
-\newpage
-
 
 \begin{definition}
      Let $X$ be a set and $R$ a relation over $X.$ We say $R$ is
@@ -107,11 +107,220 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 \textbf{Notation.} An arbitrary equivalence relation is typically denoted $\sim$.
 
 
+
+\chapter{Linear Algebra} 
+
+\section{Vector Spaces}
+
+\subsection{Definition of a Vector Space}
+
+\begin{definition}[Addition]\label{def:addition}
+    A binary operation $+: S \times S \to S$, $(s,t) \mapsto s+t$, for $s,t \in S$.
+\end{definition}
+
+\begin{definition}[Scalar Multiplication]\label{def:scalar-mult}
+    A map $*: \F \times S \to S$, $(\lambda, s) \mapsto \lambda s$, for $\lambda \in \F,\ s \in S$.
+\end{definition}
+
+
+
+\begin{definition}[Vector Space] \label{def:vector-space}
+    A Vector Space $V$ is a set equipped with an \emph{addition} and \emph{scalar multiplication} that hold the following properties:
+    \begin{itemize}
+        \item \emph{Commutativity}: $\quad \forall u,v \in V, \quad u+v=v+u.$ 
+        \item \emph{Associativity}: $\quad \forall u,v,w \in V, \quad (u + v) + w = u + (v + w).$ 
+        \item \emph{Additive Identity}: $\quad \exists 0 \in V, \forall v \in V, \quad v + 0 = v.$
+        \item \emph{Additive Inverse}: $\quad \forall v \in V, \exists w \in V, \quad v + w = 0.$
+        \item \emph{Multiplicative Identity}: $\quad \forall v \in V, \quad 1v = v.$
+        \item \emph{Distributive Laws}: $\quad \forall u,v \in V$ and $ \forall s,t \in \F,$ the following hold:
+            \[
+            \begin{aligned}
+                a(v + w) = av + aw \\ 
+                (a + b)v = av + bv.
+            \end{aligned}
+            \]
+    \end{itemize}
+\end{definition}
+
+
+\begin{theorem}[Unique Additive Inverse]\label{thm:unique-add-inv}
+    $\forall v \in V, \exists! w \in V, \quad v + w = 0.$
+\end{theorem}
+\begin{proof}
+    Suppose $V$ is a vector space. Let $ v \in V.$ Suppose $w$ and $w'$ are additive inverses of $v.$ Then
+    \[
+        w = w + 0 = w + (v +w') = (w + v) + w' = 0 + w' = w'.
+    \]
+    Thus $w = w'$. 
+\end{proof}
+
+
+\textbf{Remark.} We just proved a statement of the form,
+\[
+    \forall v \in V, [\exists u \in V, v + u = 0] \land [\forall w,w' \in V, ((v + w = 0) \land (v + w' = 0))\implies w' = w].
+\]
+
+Although this makes the proof look more complicated than it is, I believe it is an excellent demonstration on what is going on under the hood and gives insight to the mechanisms that make this proof work. First we start with the for all part of the statement, which says, ``given any vector show that the following 2 statements are true." For the first statement in the conjunction we have to provide a $u$ given a a $v$. Surely, by the definition of a vector space a vector $u$ exists. Therefore we have the first part of conjunction completed. Now for the second part of the conjunction we choose two inverses of $v$, namely: $w,w'$. And by using the properties of vector spaces we can deduce that these two elements are actually the same thing. You might notice that the first part was not explicitly stated and proved, but by working on the second part of the conjunction you are implicitly proving the existence part of the conjunctive statement, because you have to use the fact that the inverse always exists by definition of a Vector Space.
+
+\begin{theorem} \label{thm:0-times-vec}
+    $\forall v \in V, \quad 0v = 0.$ \footnote{See \ref{lean:0-times-vec} for the formalized proof.}
+\end{theorem}
+
+\begin{proof}
+    For $v \in V$, we have
+    \[
+        0v = (0 + 0)v = 0v + 0v.
+    \]
+    Adding the additive inverse of $0v$ on both sides of the equation above leaves us with $0 = 0v$, as desired.
+\end{proof}
+
+
+
 \newpage
 
+\subsubsection*{Exercises}
 
-\section{Advanced Calculus \cite{Abbott2015}}
 
+
+\begin{exercise}\label{ex:double-negation}
+    Prove that $-(-v) = v$ for every $v \in V$. \footnote{See \ref{lean:double-negation} for the formalized proof.}
+\end{exercise}
+
+
+\begin{proof}[Solution]
+    Suppose $v \in V$, where $V$ is a Vector Space. 
+    By definition $-v$ is the additive inverse of $v$, 
+    \[
+        v + (-v) = 0
+    \]
+    Also by definition, the additive inverse of $-v$ is, 
+    \[
+        -v + (-(-v)) = 0
+    \]
+    Using commutativity (\ref{def:vector-space}), we can rearrange one expression to see that
+    \[
+        \begin{aligned}
+            (-v) + v = 0 \\
+            (-v) + (-(-v)) = 0
+        \end{aligned}
+    \]
+    Now using the fact additive inverses are unique (\ref{thm:unique-add-inv}), we can conclude that 
+    \[
+        -(-v) = v.
+    \]
+\end{proof}
+
+\begin{exercise} \label{ex:add-inv-swap-0-times-vec} 
+    Show that in the definition of a vector space (\ref{def:vector-space}), the additive inverse condition can be replaced with the condition that
+    \[
+        \forall v \in V,\quad 0v = 0. \footnote{See \ref{lean:add-inv-swap-0-times-vec} for the formalized proof.}
+    \]
+\end{exercise}
+
+\begin{proof}[Solution]
+    Essentially we need to show that the following are equivalent with the help of the other axioms of a vector space:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall v \in V, \exists w \in V, \quad v + w = 0.$
+        \item $\forall v \in V, \quad 0v = 0.$
+    \end{enumerate}
+    $(a) \Rightarrow (b).$ Assume $V$ satisfies all the axioms including the additive inverse. Therefore this direction is proved by (\Cref{thm:unique-add-inv}). \\
+    $ (b) \Rightarrow (a).$ Assume $V$ satisfies commutativity, associativity, the additive identity, multiplicative identity, and distributive laws, and $0v = 0, \forall v \in V.$ We must produce some $w $ such that $v + w = 0$ for all $v$. For some given $v$ take $w = -v$. Then using the distributive property and $1v = v$: 
+    \[
+        v + (-v) = 1v + (-1)v = (1+(-1))v = 0v. 
+    \]
+    By Hypothesis $0v = 0.$ Hence 
+    \[
+        v + (-v) = 0,
+    \] 
+    so $w = -v$ is an additive inverse of $v$.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\subsubsection{Lean}
+
+To conserve space and avoid redundancy I will not be displaying imports and the definition of a Vector Space in each code block. To find out what is used before formalizing the proof, click the link to the Lean playground provided in each code block. Almost certainly each code block will have:
+
+\begin{minted}{lean4}
+import Mathlib
+variable {V : Type*} [AddCommGroup V] [Module ℝ V]
+\end{minted}
+
+Other theorems that a lean proof relies upon will not be shown either.
+
+\vspace{1cm}
+
+\begin{leanbox}{Number 0 times a vector (\ref{thm:0-times-vec})} \label{lean:0-times-vec}
+\begin{minted}{lean4}
+theorem zero_smul_eq_zero : ∀ v : V, (0 : ℝ) • v = 0 := by
+  intro v
+  have h : (0 : ℝ) • v = (0 : ℝ) • v + (0 : ℝ) • v := by
+    nth_rewrite 1 [← add_zero (0 : ℝ)]
+    rw [add_smul]
+  have h2 : (0:ℝ) • v + -((0:ℝ) • v) = ((0:ℝ) • v + (0:ℝ) • v) + -((0:ℝ) • v) := by
+    rw [← h]
+  rw [add_neg_cancel] at h2
+  rw [add_assoc, add_neg_cancel, add_zero] at h2
+\end{minted}
+\href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBwAXuRkB9AM4hNV8gEcrFmQziAAIjj4PNADRwABQADB7aAJRwgEQEPnAAvHBh9IlYLDhwcMAAdjDu%2BBlwqEj4lKgeoeFRsb6JlYyRMXEA1MHJOtVxKXBphZm5qFZQ5ADuxDCUAIx8gAmEcEjCrpYQbVX6mZlQI3wLgrb26OtFJWUATBUh9I01cK0AtEGhV534UXVP1y1tz02vt3APD4vKLdXobOBbWZFI6Q3i7KzZcgAcysAGMkNlUeRDvN4KhToVYfCkDYbBBUYF4YiUejMdjKYs3BAVCgiqcgA}{Open in Lean playground}
+\end{leanbox}
+
+\begin{leanbox}{Double Negation (\ref{ex:double-negation})} \label{lean:double-negation}
+\begin{minted}{lean4}
+theorem double_negation (v : V) : -(-v) = v := by
+  have h1 : v + (-v) = 0 := add_neg_cancel v
+  have h2 : (-v) + (-(-v)) = 0 := add_neg_cancel (-v)
+  rw [add_comm] at h1
+  -- h1 : -v + v = 0
+  -- h2 : -v + -(-v) = 0
+  have := add_left_cancel (h1.trans h2.symm)
+  exact this.symm
+\end{minted}
+\href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBxBcsuQD6AO3IBzFMAg24ACnwNFASi8BaNz98XwBeOE96MKwWHDg4VCR8SlQARi9PAGp3INC4AAYGMKRhWwcrAGMkG3LydHDY%2BMTkgCYvQOC4LMD271yCyLhiwVL7Cqqaup6GqAB3PiGK8RAVFHiUhr8%2FNf9M8LgwvI2t1FbGIM64AJz9%2FIaEpMLBkooAMxgx6tr3VIA6GCgqgBneLNH6AlgSbwNcgADyQ5XgaGAgLBEJAQA}{Open in Lean playground}
+\end{leanbox}
+
+\begin{leanbox}{Double Negation (\ref{ex:add-inv-swap-0-times-vec})} \label{lean:add-inv-swap-0-times-vec}
+\begin{minted}{lean4}
+
+\end{minted}
+\href{}{Open in Lean playground}
+\end{leanbox}
+
+
+
+
+\section{Finite-Dimensional Vector Spaces}
+
+\begin{definition}
+    
+\end{definition}
+
+
+
+
+
+
+
+
+\chapter{Advanced Calculus}
+
+
+\subsubsection*{Exercises}
 
 \begin{exercise}
     Show 
@@ -139,111 +348,19 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 \end{proof}
 
 
-\newpage
+% \chapter{Real Analysis}
 
 
-\section{Linear Algebra \cite{Axler2024}}
-
-\begin{definition}[Addition]\label{def:addition}
-    A binary operation $+: S \times S \to S$, $(s,t) \mapsto s+t$, for $s,t \in S$.
-\end{definition}
-
-\begin{definition}[Scalar Multiplication]\label{def:scalar-mult}
-    A map $*: \F \times S \to S$, $(\lambda, s) \mapsto \lambda s$, for $\lambda \in \F,\ s \in S$.
-\end{definition}
+% \chapter{Topology}
 
 
-
-\begin{definition}
-    A Vector Space $V$ is a set equipped with an \emph{addition} and \emph{scalar multiplication} that hold the following properties:
-    \begin{itemize}
-        \item \emph{Commutativity}: $\quad \forall u,v \in V, \quad u+v=v+u.$ 
-        \item \emph{Associativity}: $\quad \forall u,v,w \in V, \quad (u + v) + w = u + (v + w).$ 
-        \item \emph{Additive Identity}: $\quad \exists 0 \in V, \forall v \in V, \quad v + 0 = v.$
-        \item \emph{Additive Inverse}: $\quad \forall v \in V, \exists w \in V, \quad v + w = 0.$
-        \item \emph{Multiplicative Identity}: $\quad \forall v \in V, \quad 1v = v.$
-        \item \emph{Distributive Laws}: $\quad \forall u,v \in V$ and $ \forall s,t \in \F,$ the following hold:
-            \[
-            \begin{aligned}
-                a(v + w) = av + aw \\ 
-                (a + b)v = av + bv.
-            \end{aligned}
-            \]
-    \end{itemize}
-\end{definition}
+% \chapter{Differential Geometry}
 
 
-\begin{theorem}
-    $\forall v \in V, \exists! w \in V, \quad v + w = 0.$
-\end{theorem}
-\begin{proof}
-    Suppose $V$ is a vector space. Let $ v \in V.$ Suppose $w$ and $w'$ are additive inverses of $v.$ Then
-    \[
-        w = w + 0 = w + (v +w') = (w + v) + w' = 0 + w' = w'.
-    \]
-    Thus $w = w'$. 
-\end{proof}
+\chapter{Convex Optimization}
 
 
-\textbf{Remark.} We just proved a statement of the form,
-\[
-    \forall v \in V, [\exists u \in V, v + u = 0] \land [\forall w,w' \in V, ((v + w = 0) \land (v + w' = 0))\implies w' = w].
-\]
-
-While this makes the proof more complicated, I think it is important to see what is going on under the hood to truly understand the mechanisms that make this proof work. First we take the for all part of the statement, which says 'given any vector can you give me at least one of its inverses?' Surely, by the definition of a vector space a vector $u$ exists. Therefore we have the first part of conjunction completed. Now for the second part of the conjunction we have to assume that we are given 2 arbitrary inverses of $v$, and with that we can other other assumptions about vector spaces to always conclude that these 2 arbitrary elements are actually the same thing. Looking back at the proof you can see that the first part was not explicitly stated and proved at all but notice by working on the second part of the conjunction you are implicitly proving the existence part of the conjunctive statement.
-
-
-
-\newpage
-
-\begin{exercise}
-    Prove that $-(-v) = v$ for every $v \in V.$
-\end{exercise}
-
-\begin{proof}
-    Suppose $v \in V$, where $V$ is a Vector Space. 
-    By definition $-v$ is the additive inverse of $v$, 
-    \[
-        v + (-v) = 0
-    \]
-    Also by definition, the additive inverse of $-v$ is, 
-    \[
-        -v + (-(v)) = 0
-    \]
-    Using commutativity we can rearrange one expression to see, 
-    \[
-        \begin{aligned}
-            (-v) + v = 0 \\
-            (-v) + (-(-v)) = 0
-        \end{aligned}
-    \]
-    Now using the fact additive inverses are unique, we can conclude that 
-    \[
-        -(-v) = v.
-    \]
-\end{proof}
-
--- \href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV5yADyTgtACnwNFASisBaM3fy2AvHEv03WFnjhxUSPiUqACMVpYA1HCOznBuAAwMbkjCAPoAduQA5qkAxkjpueTo7r7%2BgcEATFYxtlGOta5wiZ5wKYIZ2XkFRSW1ZVAA7nzteeIgKij%2BIWV2dtP2ke5xzbPzqNWMTnBRDk5N8WUBQUltaRQAZjDdhcXRoQB0MFAFAM7%2BlQ%2BvLBLWZUZIXLwNDAV5fH4gIA}{Click here for the computer verified proof.}
-
-
-
-\newpage
-
-\section{Real Analysis}
-
-
-\section{Topology}
-
-
-\section{Differential Geometry}
-
-\newpage
-
-
-\section{Convex Optimization \cite{cvxbook}}
-
-
-\subsection{Convex Sets}
+\section{Convex Sets}
 
 
 \begin{definition}
@@ -255,7 +372,7 @@ While this makes the proof more complicated, I think it is important to see what
 \end{definition}
 
 
-\subsection*{Excercises}
+\subsubsection*{Exercises}
 
 
 \begin{exercise}
@@ -491,7 +608,9 @@ While this makes the proof more complicated, I think it is important to see what
 \end{proof}
 
 
-\newpage
+
+
+
 
 
 \bibliography{ref}
