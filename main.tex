@@ -53,6 +53,9 @@
 
 \chapter{Foundations}
 
+\section{Orders, Numbers, and Counting}
+
+\subsection{Relations}
 
 A relation simply relates elements in two different sets by delineating a subset of related pairs in the Cartesian product.
 
@@ -69,7 +72,6 @@ Let $X$ and $Y$ be sets. Then the following are relations:
 \end{enumerate}
 \end{example}
 
-\subsection*{Exercises}
 
 \begin{exercise}
 Give a necessary and sufficient condition for the empty, discrete, and diagonal relations to be equal.
@@ -105,6 +107,18 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 \end{definition}
 
 \textbf{Notation.} An arbitrary equivalence relation is typically denoted $\sim$.
+
+
+% \subsection{The Natural Numbers}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -163,7 +177,7 @@ defines a relation $R_1 \times R_2$ on $X_1 \times X_2$. Express this relation a
 Although this makes the proof look more complicated than it is, I believe it is an excellent demonstration on what is going on under the hood and gives insight to the mechanisms that make this proof work. First we start with the for all part of the statement, which says, ``given any vector show that the following 2 statements are true." For the first statement in the conjunction we have to provide a $u$ given a a $v$. Surely, by the definition of a vector space a vector $u$ exists. Therefore we have the first part of conjunction completed. Now for the second part of the conjunction we choose two inverses of $v$, namely: $w,w'$. And by using the properties of vector spaces we can deduce that these two elements are actually the same thing. You might notice that the first part was not explicitly stated and proved, but by working on the second part of the conjunction you are implicitly proving the existence part of the conjunctive statement, because you have to use the fact that the inverse always exists by definition of a Vector Space.
 
 \begin{theorem} \label{thm:0-times-vec}
-    $\forall v \in V, \quad 0v = 0.$ \footnote{See \ref{lean:0-times-vec} for the formalized proof.}
+    $\forall v \in V, \quad 0v = 0.$ \footnote{See \cref{lean:0-times-vec} for the formalized proof.}
 \end{theorem}
 
 \begin{proof}
@@ -183,7 +197,7 @@ Although this makes the proof look more complicated than it is, I believe it is 
 
 
 \begin{exercise}\label{ex:double-negation}
-    Prove that $-(-v) = v$ for every $v \in V$. \footnote{See \ref{lean:double-negation} for the formalized proof.}
+    Prove that $-(-v) = v$ for every $v \in V$. \footnote{See \cref{lean:double-negation} for the formalized proof.}
 \end{exercise}
 
 
@@ -213,7 +227,7 @@ Although this makes the proof look more complicated than it is, I believe it is 
 \begin{exercise} \label{ex:add-inv-swap-0-times-vec} 
     Show that in the definition of a vector space (\ref{def:vector-space}), the additive inverse condition can be replaced with the condition that
     \[
-        \forall v \in V,\quad 0v = 0. \footnote{See \ref{lean:add-inv-swap-0-times-vec} for the formalized proof.}
+        \forall v \in V,\quad 0v = 0. \footnote{See \cref{lean:add-inv-swap-0-times-vec} for the formalized proof.}
     \]
 \end{exercise}
 
@@ -265,6 +279,7 @@ Other theorems that a lean proof relies upon will not be shown either.
 
 \vspace{1cm}
 
+\refstepcounter{leancode}
 \begin{leanbox}{Number 0 times a vector (\ref{thm:0-times-vec})} \label{lean:0-times-vec}
 \begin{minted}{lean4}
 theorem zero_smul_eq_zero : ∀ v : V, (0 : ℝ) • v = 0 := by
@@ -276,10 +291,13 @@ theorem zero_smul_eq_zero : ∀ v : V, (0 : ℝ) • v = 0 := by
     rw [← h]
   rw [add_neg_cancel] at h2
   rw [add_assoc, add_neg_cancel, add_zero] at h2
+  rw [h2]
 \end{minted}
-\href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBwAXuRkB9AM4hNV8gEcrFmQziAAIjj4PNADRwABQADB7aAJRwgEQEPnAAvHBh9IlYLDhwcMAAdjDu%2BBlwqEj4lKgeoeFRsb6JlYyRMXEA1MHJOtVxKXBphZm5qFZQ5ADuxDCUAIx8gAmEcEjCrpYQbVX6mZlQI3wLgrb26OtFJWUATBUh9I01cK0AtEGhV534UXVP1y1tz02vt3APD4vKLdXobOBbWZFI6Q3i7KzZcgAcysAGMkNlUeRDvN4KhToVYfCkDYbBBUYF4YiUejMdjKYs3BAVCgiqcgA}{Open in Lean playground}
+\href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBwAXuRkB9AM4hNV8gEcrFmQziAAIjj4PNADRwABQADB7aAJRwgEQEPnAAvHBh9IlYLDhwcMAAdjDu%2BBlwqEj4lKgeoeFRsb6JlYyRMXEA1MHJOtVxKXBphZm5qFZQ5ADuxDCUAIx8gAmEcEjCrpYQbVX6mZlQI3wLgrb26OtFJWUATBUh9I01cK0AtEGhV534UXVP1y1tz02vt3APD4vKLdXobOBbWZFI6Q3i7KzZcgAcysAGMkNlUeRDvN4KhToVYfCkDYbBBUYF4YiUejMdjKYs3BAVCgigTNttePijkA}{Open in Lean playground}
 \end{leanbox}
 
+
+\refstepcounter{leancode}
 \begin{leanbox}{Double Negation (\ref{ex:double-negation})} \label{lean:double-negation}
 \begin{minted}{lean4}
 theorem double_negation (v : V) : -(-v) = v := by
@@ -294,15 +312,30 @@ theorem double_negation (v : V) : -(-v) = v := by
 \href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBxBcsuQD6AO3IBzFMAg24ACnwNFASi8BaNz98XwBeOE96MKwWHDg4VCR8SlQARi9PAGp3INC4AAYGMKRhWwcrAGMkG3LydHDY%2BMTkgCYvQOC4LMD271yCyLhiwVL7Cqqaup6GqAB3PiGK8RAVFHiUhr8%2FNf9M8LgwvI2t1FbGIM64AJz9%2FIaEpMLBkooAMxgx6tr3VIA6GCgqgBneLNH6AlgSbwNcgADyQ5XgaGAgLBEJAQA}{Open in Lean playground}
 \end{leanbox}
 
-\begin{leanbox}{Double Negation (\ref{ex:add-inv-swap-0-times-vec})} \label{lean:add-inv-swap-0-times-vec}
-\begin{minted}{lean4}
+\newpage
 
+\refstepcounter{leancode}
+\begin{leanbox}{Additive Inverse Swapped for 0v = 0 (\ref{ex:add-inv-swap-0-times-vec})} \label{lean:add-inv-swap-0-times-vec}
+\begin{minted}{lean4}
+theorem add_inv_swap : ∀ v : V, ((0 : ℝ) • v = 0 ↔ ∃ w : V, v + w = 0) := by
+  intro v
+  constructor
+  · intro h
+    use (-1 : ℝ) • v
+    nth_rewrite 1 [← one_smul ℝ v]
+    rw [← add_smul]
+    rw [show (1 + -1 : ℝ) = 0 from by ring]
+    rw [h]
+  · intro h
+    exact zero_smul_eq_zero v
 \end{minted}
-\href{}{Open in Lean playground}
+\href{https://live.lean-lang.org/#codez=JYWwDg9gTgLgBAWQIYwBYBtgCMBQOBuSUwSW6ApnAN4BqcAXHACoCeY5AVAL5wDaAggBNBAYQggQAcSgQArmDg0AunwQRBsinEC4hIqV405aORBwAXuRkB9AM4hNV8gEcrFmQziAAIjj4PNADRwABQADB7aAJRwgEQEPnAAvHBh9IlYLDhwcMAAdjDu%2BBlwqEj4lKgeoeFRsb6JlYyRMXEA1MHJOtVxKXBphZm5qFZQ5ADuxDCUAIx8gAmEcEjCrpYQbVX6mZlQI3wLgrb26OtFJWUATBUh9I01cK0AtEGhV534UXVP1y1tz02vt3APD4vKLdXobOBbWZFI6Q3i7KzZcgAcysAGMkNlUeRDvN4KhToVYfCkDYbBBUYF4YiUejMdjKYs3BAVCgigTMuQAB5IVF404AOhsLAkeBwhmMpnhOXwthGSAUjG8vkYAWC9Q6vwSSTggBTCOCAYCI4NsVYFfK1tokQiDUulMjk8isCplURBsjY8rJedBCgB2rK5dyoPpwWQ2ShBO7TBovYMDIajcZTKGu8j7TQ6HxHTbbXhzeF2TRZiE5myoCDbILTe5RjWWuAAMxkpjSEJySKLsNQRz99sDwa5PPgTLT6EcLiZPiAA}{Open in Lean playground}
 \end{leanbox}
 
 
-
+\subsection{Subspaces}
+\subsubsection{Exercises}
+\subsubsection{Lean}
 
 \section{Finite-Dimensional Vector Spaces}
 
@@ -348,7 +381,9 @@ theorem double_negation (v : V) : -(-v) = v := by
 \end{proof}
 
 
-% \chapter{Real Analysis}
+\chapter{Real Analysis}
+
+\section{The Real Numbers}
 
 
 % \chapter{Topology}
